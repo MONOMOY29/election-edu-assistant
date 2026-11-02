@@ -1,17 +1,19 @@
 import os
 import json
+import logging
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import google.generativeai as genai
 from google.api_core import exceptions as google_api_exceptions
 from dotenv import load_dotenv
-import logging
+
 try:
     import google.cloud.logging as gcp_logging
     gcp_log_client = gcp_logging.Client()
     gcp_log_client.setup_logging()
 except Exception:
     logging.basicConfig(level=logging.INFO)
+
 logger = logging.getLogger(__name__)
 load_dotenv()
 
@@ -27,6 +29,7 @@ def security_headers(response):
     response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
     return response
 
+
 # ── Gemini setup ────────────────────────────────────────────────────────────
 api_key = os.environ.get("GEMINI_API_KEY")
 if not api_key:
@@ -34,12 +37,11 @@ if not api_key:
 
 genai.configure(api_key=api_key)
 
-# Older IDs (e.g. gemini-1.5-flash-latest) often 404 as Google retires aliases — try fallbacks per request.
 _DEFAULT_MODEL_FALLBACKS = (
+    "gemini-3.8-flash",
     "gemini-2.5-flash",
     "gemini-2.0-flash",
     "gemini-1.5-flash",
-    "gemini-1.5-flash-8b",
 )
 
 
@@ -123,6 +125,7 @@ def generate_gemini(full_prompt: str):
         502,
     )
 
+
 # ── System prompts ───────────────────────────────────────────────────────────
 BASE_SYSTEM_PROMPT = """
 You are Chunav Mitra (चुनाव मित्र), a friendly and neutral election education assistant
@@ -178,6 +181,7 @@ Return a concise definition in 2-3 sentences maximum. Include:
 
 Do NOT return JSON. Return plain text only.
 """
+
 
 # ── Helpers ──────────────────────────────────────────────────────────────────
 def build_prompt(message: str, context: str) -> tuple[str, str]:
@@ -237,17 +241,14 @@ def chat():
         message = sanitize(raw_message)
         system_prompt, user_message = build_prompt(message, context)
 
-        # Combine system prompt + user message for Gemini
         full_prompt = f"{system_prompt}\n\nUser: {user_message}"
         reply_text, err_payload = generate_gemini(full_prompt)
         if err_payload is not None:
             err_body, err_code = err_payload
             return err_body, err_code
 
-        # For quiz context, validate JSON before returning
         if context.lower() == "quiz":
             try:
-                # Strip accidental markdown fences
                 clean = reply_text.replace("```json", "").replace("```", "").strip()
                 parsed = json.loads(clean)
                 if not validate_quiz_payload(parsed):
