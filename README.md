@@ -1,9 +1,8 @@
 ﻿# Chunav Mitra — Election Education Assistant
 
 An AI-powered web app to educate Indian citizens about the election process, built for PromptWars Virtual Challenge 2 (Google for Developers x Hack2Skill).
-## Build note
-Built with AI-assisted development (live-coded with AI tools).
-My role: solo 
+## Build note (election-edu-assistant)
+Solo project, built for PromptWars Virtual Challenge 2 with AI-assisted development. I'm still learning Flask and working toward being able to explain every route myself.
 ## Live Demo
 https://election-edu-app-336388849285.us-central1.run.app
 
