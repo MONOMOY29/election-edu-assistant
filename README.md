@@ -17,7 +17,7 @@ Solo project, built for PromptWars Virtual Challenge 2 with AI-assisted developm
 
 ## Tech Stack
 - Python + Flask backend
-- Google Gemini API (defaults to `gemini-2.5-flash` with automatic fallbacks; override with `GEMINI_MODEL`)
+- Google Gemini API (model set with the GEMINI_MODEL environment variable)
 - Docker + Gunicorn (port 8080) + Google Cloud Run
 
 ## Prompt Strategy
@@ -39,3 +39,8 @@ gcloud run deploy SERVICE_NAME --image REGION-docker.pkg.dev/PROJECT/REPO/IMAGE:
 ```
 
 Replace placeholders; keep the API key only in Cloud Run environment variables or Secret Manager.
+
+## Known limitations
+- Not an official source: verify with the Election Commission of India
+- AI answers can be wrong; the quiz is validated for format, not for correctness
+- Needs a Gemini API key; free-tier rate limits may apply
