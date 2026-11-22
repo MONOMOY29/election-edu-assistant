@@ -6,6 +6,9 @@ Solo project, built for PromptWars Virtual Challenge 2 with AI-assisted developm
 ## Live Demo
 https://election-edu-app-336388849285.us-central1.run.app
 
+## Build note
+Solo project, built for PromptWars Virtual Challenge 2 with AI-assisted development. I'm still learning Flask and working toward being able to explain every route myself.
+
 ## Features
 - Chat: Ask any question about Indian elections powered by Gemini AI
 - Timeline: Visual history of Indian general elections
