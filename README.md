@@ -2,7 +2,7 @@
 
 An AI-powered web app that explains the Indian election process to citizens. Ask questions in the chat, explore a timeline, take quizzes and look up key terms. Built for PromptWars Virtual Challenge 2 (Google for Developers x Hack2Skill).
 
-**Live demo:** YOUR-SERVICE-URL (free hosting: the first load can take up to ~50 seconds)
+**Live demo:** [https://election-edu-assistant.onrender.com](https://election-edu-assistant.onrender.com) (free hosting: the first load can take up to ~50 seconds)
 
 ## Build note
 Solo project, built with AI-assisted development. I'm still learning Flask and working toward being able to explain every route myself.
